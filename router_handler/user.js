@@ -63,7 +63,6 @@ exports.getUserAddress = (req, res) => {
             if(err){
                 return sendResponse(res, 400, 'Bad Request')
             }
-            console.log(connection)
             sendResponse(res, 200, 'ok',results)
         })
     })
