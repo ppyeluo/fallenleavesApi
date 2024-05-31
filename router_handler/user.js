@@ -1,8 +1,8 @@
 const db = require('../db/index')
 const log = require('../log/log')   // 导入日志处理模块
+const path = require('path')
 const { sendResponse } = require('../utils/sendResponse') // 导入响应返回模块
 const { generateToken, decodeTokenFromRequest } = require('../utils/token')
-
 // 获取用户信息
 exports.userInfo = (req, res) => {
   // 解码请求头中的token并根据它获取用户信息
@@ -103,4 +103,14 @@ exports.userRegister = async (req, res) => {
             
         })
     })
+}
+exports.uploadAvatar = (req, res) => {
+    if (!req.file) {
+        return sendResponse(res, 400, '没有上传文件')
+    }
+    // 获取上传文件的相对路径
+    const filePath = path.join('static/user', req.file.filename)
+    
+    // 返回上传文件的访问URL
+    return sendResponse(res, 200, 'ok', { avatar: `http://47.116.49.82/${filePath}` })
 }
